@@ -66,7 +66,7 @@ String Morse_F::get_MorseCode(char c)
         Serial.println("getMC");
     #endif
     byte i;
-    for (i = 0 ; i < 36 ; i++) {
+    for (i = 0 ; i < sizeof(charact); i++) {
         if (charact[i] == c) {
             #ifdef debug
                 Serial.println("found char");
@@ -89,10 +89,18 @@ void Morse_F::send(char c)
     Serial.print("\tm-Code: ");
     Serial.println(MorseCode);
     #ifdef ESP32_BT
-        SerialBT.write("Char: ");
-        SerialBT.print(c);
-        SerialBT.print("\tm-Code: ");
-        SerialBT.println(MorseCode);
+        //SerrialBT.Print is not suportet so ... we need to do it 
+        String temp = "Char: "+c+"\tm-Code: "+MorseCode;
+        // Length (with one extra character for the null terminator)
+        int str_len = temp.length() + 1; 
+        // Prepare the character array (the buffer) 
+        char char_array[str_len];
+        // Copy it over 
+        str.toCharArray(char_array, str_len);
+        for(size_t ind = 0; ind < str_len; ind++)
+        {
+            SerialBT.write(char_array[i]);
+        } 
     #endif
     byte i;
     char MorseCodeLength = MorseCode.length();
@@ -116,17 +124,25 @@ void Morse_F::send(char c)
 void Morse_F::dump()
 {
     byte d;
-    for (d = 0 ; d < 36 ; d++)
+    for (d = 0 ; d < sizeof(charact) ; d++)
     {
         Serial.print(charact[d]);
         Serial.print("=");
         Serial.print(MorsCod[d]);
         Serial.println("/");
         #ifdef ESP32_BT
-            SerialBT.write(charact[d]);
-            SerialBT.print("=");
-            SerialBT.print(MorsCod[d]);
-            SerialBT.println("/");
+            //SerrialBT.Print is not suportet so ... we need to do it 
+            String temp = charact[d] + "=" + MorsCod[d] + "/\n";
+            // Length (with one extra character for the null terminator)
+            int str_len = temp.length() + 1; 
+            // Prepare the character array (the buffer) 
+            char char_array[str_len];
+            // Copy it over 
+            str.toCharArray(char_array, str_len);
+            for(size_t ind = 0; ind < str_len; ind++)
+            {
+                SerialBT.write(char_array[i]);
+            } 
         #endif
     }
 }

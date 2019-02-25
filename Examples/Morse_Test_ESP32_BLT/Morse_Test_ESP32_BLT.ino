@@ -37,21 +37,24 @@ Morse_F Morse(LED,250);//Morse_F(LED-Pin,Unit-in-ms)set Output to pin 13  and a 
 
 
 void setup() {
-  digitalWrite(LED,HIGH);
-  //Serial.begin(115200);
-  //digitalWrite(LED,LOW);
-  SerialBT.begin("ESP32SerrialMorse"); //Bluetooth device name
-  //digitalWrite(LED,HIGH);
-  Serial.println("The device started, now you can pair it with bluetooth!");
-  Serial.println("entering Setup");
-  Serial.println("dump mors table");
-  Morse.dump();
-  digitalWrite(LED,LOW);
-  Serial.println("leaving Setup");
+    SerialBT.begin("ESP32SerrialMorse"); //Bluetooth device name
+    bool b_LED=LOW;
+    for(int i=0; i<100; i++){
+        digitalWrite(LED,b_LED);
+        b_LED = !b_LED;
+        delay(50);
+    }    
+    //digitalWrite(LED,HIGH);
+    Serial.println("The device started, now you can pair it with bluetooth!");
+    Serial.println("entering Setup");
+    Serial.println("dump mors table");
+    Morse.dump();
+    digitalWrite(LED,LOW);
+    Serial.println("leaving Setup");
 }
 
 void loop() {
-  char c;
+    char c;
     #ifdef lSerial
     if (Serial.available()) {
         while ((c = Serial.read()) > 0) {
@@ -64,6 +67,7 @@ void loop() {
     {
         while ((c = SerialBT.read()) > 0) {
             Morse.send(c);
+            SerialBT.write(c);
         }
     }
     #endif

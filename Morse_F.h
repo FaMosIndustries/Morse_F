@@ -3,6 +3,7 @@
  * 
  * version 1.0 //initial version
  * version 1.1 add some unnecessary but funny ASCII Art
+ * version 1.2 expand Morse Table with uppercase chars
  *          .-.__.-.__.-.__.-._.-.
  *        (  How the Hell do I   )
  *         "-"(  draw paws in  )"

@@ -1,3 +1,11 @@
+/*
+ * Mors Lybary Written By Fabian Morgenthaler alias Dakota
+ * 
+ * version 1.0 //initial version
+ * version 1.2 expand Morse Table with uppercase chars and ass zthis header
+ */
+
+
 #include "Arduino.h"
 #include "Morse_F.h"
 //#define debug

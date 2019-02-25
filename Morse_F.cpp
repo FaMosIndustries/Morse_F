@@ -80,6 +80,12 @@ void Morse_F::send(char c)
     Serial.print(c);
     Serial.print("\tm-Code: ");
     Serial.println(MorseCode);
+    #ifdef ESP32_BT
+        SerialBT.write("Char: ");
+        SerialBT.print(c);
+        SerialBT.print("\tm-Code: ");
+        SerialBT.println(MorseCode);
+    #endif
     byte i;
     char MorseCodeLength = MorseCode.length();
     for (i = 0 ; i < MorseCodeLength ; i++) { // loop the whole string 
@@ -108,6 +114,12 @@ void Morse_F::dump()
         Serial.print("=");
         Serial.print(MorsCod[d]);
         Serial.println("/");
+        #ifdef ESP32_BT
+            SerialBT.write(charact[d]);
+            SerialBT.print("=");
+            SerialBT.print(MorsCod[d]);
+            SerialBT.println("/");
+        #endif
     }
 }
 

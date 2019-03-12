@@ -10,8 +10,8 @@
 #include "Morse_F.h"
 //#define debug
 
-char    charact [63];
-String  MorsCod [63];
+char    charact [37];
+String  MorsCod [37];
 
 Morse_F::Morse_F(byte pin_LED, int Unit_len){
     _pin_LED = pin_LED;
@@ -84,11 +84,12 @@ String Morse_F::get_MorseCode(char c)
 void Morse_F::send(char c)
 {
     String MorseCode = get_MorseCode(c);
-    Serial.print("Char: ");
+    //Serial.print("Char: ");
     Serial.print(c);
-    Serial.print("\tm-Code: ");
+    Serial.print(" ");
+    //Serial.print("\tm-Code: ");
     Serial.println(MorseCode);
-    #ifdef ESP32_BT
+    /*#ifdef ESP32_BT
         //SerrialBT.Print is not suportet so ... we need to do it 
         String temp = "Char: "+c+"\tm-Code: "+MorseCode;
         // Length (with one extra character for the null terminator)
@@ -101,7 +102,7 @@ void Morse_F::send(char c)
         {
             SerialBT.write(char_array[i]);
         } 
-    #endif
+    #endif*/
     byte i;
     char MorseCodeLength = MorseCode.length();
     for (i = 0 ; i < MorseCodeLength ; i++) { // loop the whole string 
@@ -127,10 +128,10 @@ void Morse_F::dump()
     for (d = 0 ; d < sizeof(charact) ; d++)
     {
         Serial.print(charact[d]);
-        Serial.print("=");
+        Serial.print(" ");
         Serial.print(MorsCod[d]);
-        Serial.println("/");
-        #ifdef ESP32_BT
+        Serial.println("");
+        /*#ifdef ESP32_BT
             //SerrialBT.Print is not suportet so ... we need to do it 
             String temp = charact[d] + "=" + MorsCod[d] + "/\n";
             // Length (with one extra character for the null terminator)
@@ -143,7 +144,7 @@ void Morse_F::dump()
             {
                 SerialBT.write(char_array[i]);
             } 
-        #endif
+        #endif*/
     }
 }
 
